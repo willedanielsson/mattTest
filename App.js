@@ -7,8 +7,11 @@ import thirdImage from "./assets/third.jpg";
 
 export default class App extends Component {
   constructor(props) {
-    super(props);
-    this.state = { imageIndex: 0 };
+    super(props)
+    this.state = {
+      imageIndex: 0,
+      rotation: '0deg'
+    };
   }
 
   nextImage = () => {
@@ -23,6 +26,18 @@ export default class App extends Component {
     }
   };
 
+  rotateImage = () => {
+    if(this.state.rotation === '0deg') {
+      this.setState({
+        rotation: '90deg'
+      })
+    } else {
+      this.setState({
+        rotation: '0deg'
+      })
+    }
+  }
+
   render() {
     let imageToShow = null;
     if (this.state.imageIndex === 0) {
@@ -36,16 +51,21 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image style={styles.image} source={imageToShow} />
+          <Image style={[styles.image, { transform: [{ rotate: this.state.rotation }] }]} source={imageToShow} />
         </View>
         <View style={styles.buttonContainer}>
-        <TouchableHighlight style={styles.button} onPress={this.prevImage}>
-          <Text style={styles.buttonText} >Previous image</Text>
-        </TouchableHighlight>
-        <TouchableHighlight style={styles.button} onPress={this.nextImage}>
-          <Text style={styles.buttonText} >Next image</Text>
-        </TouchableHighlight>
+          <TouchableHighlight style={styles.button} onPress={this.prevImage}>
+            <Text style={styles.buttonText}>Previous image</Text>
+          </TouchableHighlight>
+          <TouchableHighlight style={styles.button} onPress={this.nextImage}>
+            <Text style={styles.buttonText}>Next image</Text>
+          </TouchableHighlight>
         </View>
+        <View style={styles.buttonContainer}>
+          <TouchableHighlight style={styles.button} onPress={this.rotateImage}>
+            <Text style={styles.buttonText}>ROATATE</Text>
+          </TouchableHighlight>
+          </View>
       </View>
     );
   }
@@ -58,25 +78,25 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center"
   },
   image: {
-    width: '100%',
+    width: "100%",
     height: "80%"
   },
-  buttonContainer:{
+  buttonContainer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row"
   },
   button: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
     padding: 10,
     margin: 10,
-    height: 50,
+    height: 50
   },
   buttonText: {
-    color: 'blue'
+    color: "blue"
   }
 });
